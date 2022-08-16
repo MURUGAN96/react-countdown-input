@@ -8,7 +8,9 @@ function Solution() {
   const [givenSec, setGivenSec] = useState(0);
   const [pause, setPause] = useState(false);
   let id;
+
   useEffect(() => {
+    if (pause) return;
     id = setInterval(() => {
       if (givenSec > 0) {
         setGivenSec(givenSec - 1);
@@ -40,6 +42,8 @@ function Solution() {
   };
 
   const pauseTime = () => {
+    console.log('stop');
+    setPause(true);
     clearInterval(id);
   };
 
@@ -47,6 +51,12 @@ function Solution() {
     setGivenSec(0);
     setGivenMin(0);
   };
+
+  const resumeTime = () => {
+    console.log('resume');
+    setPause(false);
+  };
+
   return (
     <Fragment>
       <label>
@@ -59,7 +69,9 @@ function Solution() {
       </label>
 
       <button onClick={startTime}>START</button>
-      <button onClick={pauseTime}>PAUSE / RESUME</button>
+      <button onClick={pause == true ? resumeTime : pauseTime}>
+        PAUSE / RESUME
+      </button>
       <button onClick={resetTime}>RESET</button>
 
       <h1 data-testid="running-clock">{`${givenMin}:${givenSec}`}</h1>
