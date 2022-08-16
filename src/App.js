@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useEffect, useState } from 'react';
 
-function Solution() {
+function App() {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
   const [givenMin, setGivenMin] = useState(0);
@@ -36,7 +36,6 @@ function Solution() {
   };
 
   const startTime = () => {
-    console.log('34: ' + min, sec);
     setGivenSec(sec);
     setGivenMin(min);
   };
@@ -79,4 +78,4 @@ function Solution() {
   );
 }
 
-export default Solution;
+export default App;
