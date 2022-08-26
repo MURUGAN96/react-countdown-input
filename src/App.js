@@ -7,11 +7,13 @@ function App() {
   const [givenMin, setGivenMin] = useState(0);
   const [givenSec, setGivenSec] = useState(0);
   const [pause, setPause] = useState(false);
+
   let id;
 
   useEffect(() => {
     if (pause) return;
     id = setInterval(() => {
+      console.log('16: ' +givenSec, givenMin);
       if (givenSec > 0) {
         setGivenSec(givenSec - 1);
       }
@@ -36,8 +38,12 @@ function App() {
   };
 
   const startTime = () => {
-    setGivenSec(sec);
-    setGivenMin(min);
+    //display in valid minutes and seconds
+    // setPause()
+    const realSec = sec % 60;
+    const realMin = Number(min) + Math.trunc(min / 60);
+    setGivenSec(realSec);
+    setGivenMin(realMin);
   };
 
   const pauseTime = () => {
@@ -47,6 +53,10 @@ function App() {
   };
 
   const resetTime = () => {
+    const minn = document.querySelector('.min');
+    const secc = document.querySelector('.sec');
+    minn.value = '00';
+    secc.value = '00';
     setGivenSec(0);
     setGivenMin(0);
   };
@@ -59,11 +69,11 @@ function App() {
   return (
     <Fragment>
       <label>
-        <input onChange={(e) => getMinutes(e)} type="number" />
+        <input className="min" onChange={(e) => getMinutes(e)} type="number" />
         Minutes
       </label>
       <label>
-        <input onChange={(e) => getSeconds(e)} type="number" />
+        <input className="sec" onChange={(e) => getSeconds(e)} type="number" />
         Seconds
       </label>
 
@@ -73,7 +83,10 @@ function App() {
       </button>
       <button onClick={resetTime}>RESET</button>
 
-      <h1 data-testid="running-clock">{`${givenMin}:${givenSec}`}</h1>
+      <h1 className="result" data-testid="running-clock">
+        {givenMin < 10 ? 0 + `${givenMin}` : `${givenMin}`}:
+        {givenSec < 10 ? 0 + `${givenSec}` : `${givenSec}`}
+      </h1>
     </Fragment>
   );
 }
